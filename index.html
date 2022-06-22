@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Zhuoyu Feng - AI Camp DS Crash Course</title>
+        <!-- Favicon-->
+<!--         <link rel="icon" type="image/x-icon" href="../static/assets/favicon.ico" /> -->
+        <!-- <link href="{{url_for('static', filename='assets/favicon.ico')}}" rel="stylesheet" /> -->
+        <link href="./static/assets/favicon.ico" rel="stylesheet" />
+        <!-- Font Awesome icons (free version)-->
+        <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <!-- <link href="{{url_for('static', filename='css/styles.css')}}" rel="stylesheet" /> -->
+        <link href="./static/css/styles.css" rel="stylesheet" />
+    </head>
+    <body id="page-top">
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+            <div class="container">
+<!--                 <a class="navbar-brand" href="#page-top"><img src="../static/assets/img/text-508837.svg" alt="..." /></a> -->
+                <a class="navbar-brand" href="#page-top"><img src='./static/assets/img/text-508837.svg' alt="..." /></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    Menu
+                    <i class="fas fa-bars ms-1"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
+                        <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#exploration">Exploration</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#model">Model</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#conclusion">Conclusion</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- Masthead-->
+        <header class="masthead">
+            <div class="container">
+                <div class="masthead-subheading">AI Can Be Your Doctor</div>
+                <div class="masthead-heading text-uppercase">Cervical Cancer Risk Analysis</div>
+                <a class="btn btn-primary btn-xl text-uppercase" href="#about">Tell Me More</a>
+            </div>
+        </header>
+        <!-- About-->
+        <section class="page-section" id="about">
+            <div class="container">
+                <div class="text-center">
+                    <h2 class="section-heading text-uppercase">About</h2>
+                    <!-- <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3> -->
+                </div>
+                <div class="row text-center">
+                    <h3 style="text-align: left;"> What does the project do?</h3>
+                    <p class="text-muted" style="text-align: left;">
+                        Cervical cancer affects nearly 200,000 women per year in the United States alone. 
+                        With the introduction of the HPV vaccine this number has gone down drastically, but it still remains prevalent
+                        and often goes undetected, especially in developing countries. 
+                        In this project we aim to identify behavioral patterns that put women at a greater risk of contracting cervical cancer. 
+                        <br> <br>
+                        We will use behavioral dataset that contains information about age, sexual health and results from four different diagnostic tests to predict the presence of cancerous cells in the cervix of a patient. Feature
+                        importance will be leveraged to construct risk profiles (high, low, medium risk) and validate our
+                        model against treatment schematics used by gynecologists as a course of action. Generation of
+                        such risk profiles will help healthcare institutions/doctors to identify at risk individuals who should
+                        receive immediate attention and a more tailored health plan.</p>
+                </div>
+            </div>
+        </section>
+        <!-- Exploration-->
+        <section class="page-section bg-light" id="exploration">
+            <div class="container">
+                <div class="text-center">
+                    <h2 class="section-heading text-uppercase">Exploration</h2>
+                    <!-- <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3> -->
+                </div>
+                <div class="row text-center">
+                    <h3 style="text-align: left;"> Data Sources & Structure</h3>
+                    <p class="text-muted" style="text-align: left;">
+                        The dataset we used is called “Cervical Cancer Behavior Risk Data Set” and can be found
+                        here: <a href="https://www.openml.org/search?type=data&sort=runs&id=42912&status=active">Cervical Cancer Data</a>.
+                        The dataset contains 32 features and 858 instances, each corresponding
+                        to a patient. There are 10 numerical features (age, number of of sexual partners, etc.), and the
+                        rest are categorical relating to clinical markers (STD type, diagnosis, etc.). Given the nature of
+                        the dataset it is not surprising that 11.73 % of the values are missing.
+                        <br> <br>
+                        The dataset has 4 target variables (Hinselmann, Schiller, Cytology, and Biopsy), all of which are
+                        diagnostic tests for cervical cancer. These target variables do not contain information about the
+                        metrics of these tests, rather are Boolean variables with 1 indicating a positive test result for
+                        presence of cervical cancer. There are instances when all 4 target variables do not agree which
+                        poses a challenge of correctly annotating a sample. We plan to conduct extensive literature review
+                        so as to factor in the reliability of each of these tests. Considering a new target variable to be the
+                        logical OR of these 4, the dataset is highly imbalanced.
+                        <br> <br>
+                        We can plot number of positive samples and negative samples for four target variables,
+                        to prove that it is a highly imbalanced dataset:
+                    </p>
+                    <iframe width="1000" height="500" src="./static/target_variables.html"></iframe>
+                      <!-- <iframe width="1000" height="500" src="{{url_for('static', filename='target_variables.html')}}"></iframe> -->
+                    <p class="text-muted" style="text-align: left;">
+                        This is the data structure:
+                    </p>
+                    <div class="timeline-image"><img src='./static/images/data_structure.svg' alt="..." /></div>
+                    
+
+
+                    <h3 style="text-align: left; margin-top: 10px;">Missing Value Analysis</h3>
+                    <p class="text-muted" style="text-align: left;">
+                        Due the nature of the dataset, which is regarding cancers, and considering patients's privacy,
+                        it is not surprising that we have to handle a great number of missing values.
+                        <br>
+                        We plotted the following bar chart to show the missing value percentage of each feature:
+                    </p>
+                    <iframe width="1000" height="750" src="./static/missing percentage.html"></iframe> 
+                    <!-- <iframe width="1000" height="750" src="{{url_for('static', filename='missing percentage.html')}}"></iframe> -->
+
+                    <p class="text-muted" style="text-align: left;">
+                    We can see there are huge number of missing values in STD: Time since first and last diagnosis so 
+                    it makes sense to drop these features. Moreover, there is a clear pattern where there 
+                    is no information about contraceptives, IUD and any type of STDs. This is probably because
+                    the patients were not comfortable disclosing this information.
+                    </p>
+                    <p class="text-muted" style="text-align: left;">
+                        Then we are able to draw the following conclusions:
+                        <br>
+                        1. We decided to drop variables with more than 50% missing values - STDs: Time since first diagnosis and Time since last diagnosis
+                        <br>
+                        2. Superfluous columns such as IUD, Hormonal Contraceptives, Smokes and STDs were dropped as their counterparts contained information about instance and the duration of the instance (for e.g. IUD (years))
+                        <br>
+                        3. Approximately 13% missing values followed the same pattern with missing entries in all variables related to sexual health of the patient including contraceptives; probably due to privacy concerns
+                    </p>
+                    <p class="text-muted" style="text-align: left;">
+                        Missing values for numerical and categorical features were imputed differently.
+                        <br>
+                        1. Numerical features pertaining to sexual health of a patient, like first sexual encounter, were imputed using the mean calculated for specific age brackets.
+                        <br>
+                        2. Missing values for different STDs were imputed by looking at its plurality label - if the majority was greater than 98%, the missing values were imputed by plurality label and if not, a KNNImputer (k=30) was used to fill in for the missing values.
+                    </p>
+                    <div class="timeline-image"><img src="./static/images/imputation.png" alt="..." width="750"/></div>
+                  <!-- <div class="timeline-image"><img src={{url_for('static', filename='images/imputation.png')}} alt="..." width="750"/></div> -->
+
+                    
+                    <h3 style="text-align: left; margin-top: 10px;">Correlation table of data</h3>
+                    <p class="text-muted" style="text-align: left;">
+                        We created a correlation table to see how different features correlated with our four target values.
+                        As we can see from the table, four target variables are highly correlated with each other. Besides,
+                        Dx:HPV and STDs: Number of diagnosis have close correlation with four target variables, which means HPV 
+                        and other STDs (sexually transmitted diseases) are important indicators to Cervical Cancer.
+                    </p>
+                    <iframe width="1000" height="1000" title="Correlation Table of Features" src="./static/correlation.html"></iframe> 
+                    <!-- <iframe width="1000" height="1000" src="{{url_for('static', filename='correlation.html')}}"></iframe> -->
+                    <br>
+                    <p class="text-muted" style="text-align: left;">
+                        We can tell from the correlation table that a couple of groups of features are highly correlated (correlation > 0.6),
+                        e.g., Smokes (years) and Smokes (packs/year), STDs: Number of diagnosis and STDs (number), 
+                        DX: CIN, DX: Cancer, DX: HPV and DX. Hence, we selected to drop Dx, Dx:Cancer,
+                        STDs (number) and Smokes (packs/year).
+                    </p>
+                
+
+                    <h3 style="text-align: left; margin-top: 10px;">Scatterplots of trends</h3>
+                    <p class="text-muted" style="text-align: left;">
+                        We plotted scatterplots to show trends among different numerical features.
+                    </p>
+                    <iframe width="1000" height="1000" src="./static/scatter.html"></iframe> 
+                    <!-- <iframe width="1000" height="1000" src="{{url_for('static', filename='scatter.html')}}"></iframe> -->
+                    <br>
+                    <p class="text-muted" style="text-align: left;">
+                        Also, we visualized the relationships between four target variables and two key features:
+                        DX:HPV and STDs: Number of diagnosis, using violin plots. 
+                    </p>
+                    <div class="timeline-image"><img src="./static/images/HPV.png" alt="..." width="750"/></div>
+                    <!-- <div class="timeline-image"><img src={{url_for('static', filename='images/HPV.png')}} alt="..." width="750"/></div> -->
+                    <div class="timeline-image"><img src="./static/images/STDs_Number of diagnosis.png" alt="..." width="750"/></div>
+                    <!-- <div class="timeline-image"><img src={{url_for('static', filename='images/STDs_Number of diagnosis.png')}} alt="..." width="750"/></div> -->
+
+                
+                    <h3 style="text-align: left; margin-top: 10px;">Handling Imbalanced Data</h3>
+                    <p class="text-muted" style="text-align: left;">
+                        To deal with the highly imbalanced dataset, we used the following two techniques: <br>
+                        1. Applied <b>stratified splitting</b> when splitting the dataset into train, validation and test sets. \
+                        2. Processed the data using <b>Synthetic Minority Oversampling Technique (SMOTE)</b>.
+                    </p>
+                </div>
+            </div>
+        </section>
+        <!-- Model-->
+        <section class="page-section" id="model">
+            <div class="container">
+                <div class="text-center">
+                    <h2 class="section-heading text-uppercase">Model</h2>
+                    <h3 class="section-subheading text-muted" style="text-align: left;">
+                        In this classification task, We decided to restrict our models to only tree based or
+                        probabilistic models. This was motivated by the schematic
+                        used by doctors and nurses to identify patients with a risk
+                        of cancer. The schematic's structure is exactly like that of
+                        a decision tree where in each node specifies a characteristic,
+                        for example age of a patient, presence of an STD etc, and
+                        each edge describes a course of action. In addition, we chose 
+                        to use Logistic Regression as the benchmark. Hence, The models we used
+                        include - random forests, XGBoost, AdaBoost and logistic regression. <br> <br>
+                        Separate models were trained for all four target variables, but due to the length limit,
+                        we only show the results on 'Cytology' here.
+                    </h3>
+                </div>
+
+                <h3 style="text-align: left;">Logistic Regression</h3>
+                <p style="text-align: left;">
+                    <li class="text-muted" > Logistic regression is a common predictive model used in healthcare research. Its structure
+                    makes it easy to deploy and interpret. Moreover, the underlying assumption that all samples are iids and the conditional
+                    distribution of the target given a sample is Bernoulli perfectly fits our data. </li>
+                    <li class="text-muted" > Two hyperparameters were tuned - maximum number of iterations and the solver.</li>
+                    <li class="text-muted" > We used newton-cg solver for learning a classifier for Biopsy results. Logistic regression models had an average accuracy of 75% for all target variables. However, it fared badly when predicting biopsy
+                        and cytology results with a recall score of 0.273 and 0.44 respectively. </li>
+                    <li class="text-muted" > For all target variables, pelvic inflammatory disease, cervical
+                        condylomatosis, HPV infection, HIV, age and first sexual encounter were identified as the most important features </li>
+                </p>
+                <p class="text-muted" style="text-align: left;">
+                    We plotted the <b>confusion matrix</b> to visualize how our model is predicting the test data. 
+                    Also, we make graphs on the <b>feature importances</b> of features to see whether our models make sense intuitively.
+                </p>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="timeline-image">
+                          <img src="./static/images/cm_lr.png" alt="..." height="500"/>
+                          <!-- <img src={{url_for('static', filename='images/cm_lr.png')}} alt="..." height="500"/> -->
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="timeline-image">
+                          <img src="./static/images/imps_lr.png" alt="..." height="500"/>
+                          <!-- <img src={{url_for('static', filename='images/imps_lr.png')}} alt="..." height="500"/> -->
+                        </div>
+                    </div>
+                </div>
+                
+
+                <h3 style="text-align: left; margin-top: 20 pt;">Random Forest</h3>
+                <p style="text-align: left;">
+                    <li class="text-muted">Random forests is a bagging based approach which bootstraps the data by random sub-sampling in
+                        each iteration to grow trees. The simplicity, implicit feature selection and speed make it 
+                        a good model for consideration. When leveraged for healthcare datasets, tree based models
+                        are easy to interpret since each node in a tree learns a threshold, similar to a threshold 
+                        for vital signs or for diagnostic tests. Moreover, for cervical cancer in particular, 
+                        gynecologists follow a tree-schematic when deciding a course of action for a patient.</li>
+                    <li class="text-muted">Similar to logistic regression models, we performed 5-fold cross validation to find the 
+                        best setting for two hyperparameters - the maximum depth and the number of trees/estimators.</li>
+                    <li class="text-muted">These models consistently had an accuracy greater than 90% for all diagnostic test with highest
+                        for Hinselmann (98.1%) and the lowest for Schiller (90%).
+                        The recall scores were also above 0.7 for all models except
+                        Schiller that had the lowest recall score of 0.67.
+                        Various STDs like HPV, HIV, AIDS, genital herpes and
+                        pelvic inflammatory disease were detected as important features by random forests model.</li>
+                </p>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="timeline-image">
+                          <img src="./static/images/cm_rf.png" alt="..." height="500"/>
+                          <!-- <img src={{url_for('static', filename='images/cm_rf.png')}} alt="..." height="500"/> -->
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="timeline-image">
+                          <img src="./static/images/imps_rf.png" alt="..." height="500"/>
+                          <!-- <img src={{url_for('static', filename='images/imps_rf.png')}} alt="..." height="500"/> -->
+                        </div>
+                    </div>
+                </div>
+
+
+                <h3 style="text-align: left; margin-top: 20 pt;">XGBoost</h3>
+                <p style="text-align: left;">
+                    <li class="text-muted"> Extreme Gradient Boosting is a type of gradient based boosting that is known to have good performance
+                        and speed. XGBoost implements several optimization and
+                        regularization techniques and handles sparse data very well.
+                        This model is a great fit as most of the data is sparse given
+                        that it contains information about more than 10 STDs. </li>
+                    <li class="text-muted">Three hyperparameters including the number of trees, maximum depth and learning rate were 
+                        tuned using 5-fold cross validation. </li>
+                    <li class="text-muted">XGBoost models consistently fared well for all target variables with an
+                        average accuracy of greater than 92% and recall score greater than 0.7.</li>
+                    <li class="text-muted">Interestingly enough, unlike the models discussed so far, XGBoost identified number of pregnancies along with the rest
+                        as one of the top features in predicting the risk of cervical
+                        cancer which the American Cancer Society also recognized along with smoking.</li>
+                </p>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="timeline-image">
+                          <img src="./static/images/cm_xgb.png" alt="..." height="500"/>
+                          <!-- <img src={{url_for('static', filename='images/cm_xgb.png')}} alt="..." height="500"/> -->
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="timeline-image">
+                          <img src="./static/images/imps_xgb.png" alt="..." height="500"/>
+                          <!-- <img src={{url_for('static', filename='images/imps_xgb.png')}} alt="..." height="500"/> -->
+                        </div>
+                    </div>
+                </div>
+
+
+                <h3 style="text-align: left; margin-top: 20 pt;">AdaBoost</h3>
+                <p style="text-align: left;">
+                    <li class="text-muted">AdaBoost is used to build meta classifier by
+                        combining several weak classifiers using progressive learning. Since this is a low noise dataset and AdaBoost requires
+                        less number of hyperparameters to be tuned, it is a good fit for our task.</li>
+                    <li class="text-muted">Similar to XGBoost, we tuned the number of estimators and
+                        learning rate using a grid search and 5-fold cross validation.
+                        It was surprising to see AdaBoost models have significantly lower performance
+                        compared to all other models and for all target variables.</li>
+                    <li class="text-muted">Clearly, this model architecture isn't right for our task contrary to our initial assumption. Despite the consistent poor
+                        performance, these models did identify HPV and pelvic inflammatory disease to be the top predictive features for all
+                        target variables  </li>              
+                </p>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="timeline-image">
+                          <img src="./static/images/cm_ada.png" alt="..." height="500"/>
+                          <!-- <img src={{url_for('static', filename='images/cm_ada.png')}} alt="..." height="500"/> -->
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="timeline-image">
+                          <img src="./static/images/imps_ada.png" alt="..." height="500"/>
+                          <!-- <img src={{url_for('static', filename='images/imps_ada.png')}} alt="..." height="500"/> -->
+                        </div>
+                    </div>
+                </div>
+
+
+                <h3 style="text-align: left; margin-top: 20 pt;">Model Comparision</h3>
+                <p style="text-align: left;">
+                    <p class="text-muted">
+                        In this section we will focus on comparing models only for
+                        predicting <b>cytology</b> test results, also known as a pap test,
+                        since it is the most widely used screening method for cervical
+                        cancer. Plots comparing models for other target variables can
+                        be found in the code.
+                    </p>
+                </p>
+                <p class="text-muted" style="text-align: left; margin-top: 20 pt;">
+                    We made a table with all metrics such as negative prediction accuracy (NPA), positive prediction accuracy
+                    (PPA), F1 score, to name a few, for all models and target variables is given below.
+                </p>
+                <div class="timeline-image">
+                  <img src="./static/images/table.png" alt="..." height="500"/>
+                  <!-- <img src={{url_for('static', filename='images/table.png')}} alt="..." height="500"/> -->
+                </div>
+
+                <p class="text-muted" style="text-align: left; margin-top: 20 pt;">
+                    Since the data is highly imbalanced and the cost of failing
+                    to identify a high risk patient (false negatives) is greater than
+                    falsely identifying a low risk patient as high risk (false positives), 
+                    we rank the models on the basis of ROC curves.
+                </p>
+                <div class="timeline-image">
+                  <img src="./static/images/roc.png" alt="..." height="500"/>
+                  <!-- <img src={{url_for('static', filename='images/roc.png')}} alt="..." height="500"/> -->
+                </div>
+
+                <p class="text-muted" style="text-align: left; margin-top: 20 pt;">
+                    We also made the Precision-Recall (PR) Curve for all models
+                </p>
+                <div class="timeline-image">
+                  <img src="./static/images/pr.png" alt="..." height="500"/>
+                  <!-- <img src={{url_for('static', filename='images/pr.png')}} alt="..." height="500"/> -->
+                </div>
+                <p class="text-muted" style="text-align: left; margin-top: 20 pt;">
+                    We can make the conclusion that the best performing model is <b>Random Forest</b> since it has the
+                    greatest ROC-AUC and relatively high precision for high recall.
+                </p>
+            </div>
+        </section>
+
+
+        <!-- Conclusion -->
+        <section class="page-section" id="conclusion">
+            <div class="container">
+                <div class="text-center">
+                    <h2 class="section-heading text-uppercase">Conclusion</h2>
+                    <!-- <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3> -->
+                </div>
+                <p style="text-align: left;">
+                    <li class="text-muted">We trained 16 different models, 4 for each target variable.
+                        The selection of models was motivated by their architectural similarity to screening 
+                        schematics used by healthcare professionals specifically for diagnosing cervical cancer. 
+                    </li>
+                    <li class="text-muted">We saw that Random forests was the best performing model and all
+                        models successfully detected HPV infection, STDs such as
+                        HIV, AIDS, pelvic inflammatory disease, age and number of
+                        pregnancies as highly predictive features. It was interesting
+                        to see despite the performance, random forests failed to identify smoking and number of pregnancies as important features, unlike the other models. Contrary to intuition, previous
+                        cancer history was not detected to be important by any of the models.
+                    </li>
+                    <li class="text-muted">
+                        This project is an attempt to create models that would help
+                        healthcare professionals in identifying high risk individuals
+                        and possibly decrease the long wait times that every person
+                        experiences in the United States and also help developing
+                        countries in early detection. A lot of ground-breaking work
+                        precedes this project - models that have an even better accuracy 
+                        and faster deployment. Those have not been discussed
+                        as they are beyond the scope of this project.
+                    </li>              
+                </p>
+            </div>
+        </section>
+
+        <!-- Contact -->
+        <section class="page-section bg-light" id="contact">
+            <div class="container">
+                <div class="text-center">
+                    <h2 class="section-heading text-uppercase" style="color: black;">My Info</h2>
+                    <h3 class="section-subheading text-muted">Contact Me</h3>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4 mx-auto text-center">
+                        <div class="team-member" >
+                            <img class="mx-auto rounded-circle" src="./static/images/me.jpg" alt="..." />
+                            <!-- <img class="mx-auto rounded-circle" src={{url_for('static', filename='images/me.jpg')}} alt="..." /> -->
+                            <h4>Zhuoyu Feng (Rain)</h4>
+                            <p class="text-muted">Project Designer</p>
+                            <a class="btn btn-dark btn-social mx-2" href="https://www.instagram.com/rain3_fzy/" aria-label="Instagram Profile"><i class="fab fa-instagram"></i></a>
+                            <a class="btn btn-dark btn-social mx-2" href="https://github.com/RainFZY" aria-label="Github Profile"><i class="fab fa-github"></i></a>
+                            <a class="btn btn-dark btn-social mx-2" href="https://www.linkedin.com/in/zhuoyufeng/" aria-label="LinkedIn Profile"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="row">
+                    <div class="col-lg-8 mx-auto text-center"><p class="large text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut eaque, laboriosam veritatis, quos non quis ad perspiciatis, totam corporis ea, alias ut unde.</p></div>
+                </div> -->
+            </div>
+        </section>
+
+
+        <!-- Footer-->
+        <footer class="footer py-4">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-4 mx-auto text-center">Copyright &copy; AI Camp 2022</div>
+                </div>
+            </div>
+        </footer>
+
+
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="./static/js/scripts.js"></script>
+        <!-- <script src={{url_for('static', filename='js/scripts.js')}}></script> -->
+        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+        <!-- * *                               SB Forms JS                               * *-->
+        <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
+        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+        <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+    </body>
+</html>
