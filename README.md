@@ -18,7 +18,7 @@
 
 - **Homepage**
 
-  ![](app/static/images/homepage.png)
+  ![](static/images/homepage.png)
 
 
 - **About**
@@ -48,16 +48,10 @@
 ## Quick Start
 **DS/ML Part**: 
 
-Run Cervical-Cancer-Risk-Analysis.ipynb in the main folder.
+Run `Cervical-Cancer-Risk-Analysis.ipynb` in the main folder.
 
 **Web Application Part**: 
 
-Enter the app folder in the terminal:
+Open `index.html`
 
-`cd app`
-
-Start the flask server:
-
-`python -m main`
-
-Click the link appears in the terminal. Done!
+Or go to [<https://rainfzy.github.io/Cervical-Cancer-Data-Analysis/>](https://rainfzy.github.io/Cervical-Cancer-Data-Analysis/)
